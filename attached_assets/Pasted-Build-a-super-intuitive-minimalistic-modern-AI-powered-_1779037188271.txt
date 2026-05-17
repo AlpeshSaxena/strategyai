@@ -1,0 +1,289 @@
+Build a super intuitive, minimalistic, modern AI-powered SaaS web application called “AI Website Strategy & Growth Analyzer”.
+
+The platform should analyze a business website and provide strategic AI-powered insights including:
+- Website content analysis
+- Competitor analysis
+- Keyword suggestions
+- Content improvement recommendations
+- User flow analysis
+- Growth strategy insights
+
+The final product should feel like a premium AI startup product similar to Stripe, Notion, Linear, or Framer.
+
+========================================
+TECH STACK
+========================================
+
+Frontend:
+- React + TailwindCSS
+- Framer Motion for animations
+- Lucide React icons
+- Responsive mobile-first design
+
+Backend:
+- Node.js + Express
+- Modular architecture
+- AI integration ready structure
+
+Deployment Ready:
+- Compatible with Vercel / Netlify
+- Environment variable support
+- Production-ready build setup
+
+========================================
+UI / UX DESIGN REQUIREMENTS
+========================================
+
+Design Style:
+- Super minimalistic
+- Elegant black / white / electric blue theme
+- Glassmorphism elements
+- Clean typography
+- Smooth transitions
+- Rounded corners
+- Premium SaaS feel
+- Spacious layout
+- Modern analytics dashboard aesthetics
+
+Include:
+- Dark mode support
+- Skeleton loading states
+- Hover animations
+- Smooth page transitions
+- Beautiful empty states
+- Responsive design for mobile/tablet/desktop
+
+Use:
+- Framer Motion animations
+- Tailwind utility-first styling
+- Clean reusable UI components
+
+========================================
+LANDING PAGE
+========================================
+
+Create a premium hero section with:
+Heading:
+“AI Website Strategy & Growth Analyzer”
+
+Subheading:
+“Analyze your website’s SEO, content, competitors, and user experience with AI-powered strategic insights.”
+
+Features:
+- URL input field
+- Analyze Website CTA button
+- Animated gradient background
+- Floating dashboard preview
+- Subtle particle/glow effects
+
+Add:
+- About section
+- Features section
+- Contact section
+- Professional footer
+
+========================================
+CORE MODULES
+========================================
+
+1. WEBSITE CONTENT EXTRACTION MODULE
+
+When user enters a website URL:
+Extract:
+- Website title
+- Meta description
+- Headings (H1/H2/H3)
+- Main textual content
+- Navigation links
+- CTA buttons
+- Basic page structure
+
+Create backend utility:
+- scrapeWebsiteContent(url)
+
+Display results inside:
+- Elegant cards
+- Expandable sections
+- Structured insight panels
+
+========================================
+2. COMPETITOR ANALYSIS MODULE
+========================================
+
+Allow:
+- Optional competitor URL input
+OR
+- Mock competitor generation based on industry keywords
+
+Analyze:
+- Competitor strengths
+- Weaknesses
+- Content quality
+- UX comparison
+- CTA comparison
+
+Display:
+- Comparison cards
+- Tables
+- Progress bars
+- Insight metrics
+
+========================================
+3. KEYWORD ANALYSIS MODULE
+========================================
+
+Generate:
+- Primary keywords
+- Long-tail keywords
+- SEO opportunities
+- Search intent categories
+- Basic keyword scoring
+
+Display:
+- Keyword chips/tags
+- SEO score meter
+- Opportunity indicators
+- Trend-style cards
+
+========================================
+4. CONTENT IMPROVEMENT MODULE
+========================================
+
+Generate AI-powered suggestions for:
+- Headlines
+- Readability
+- SEO optimization
+- CTA improvements
+- Engagement enhancement
+- Trust-building copy
+
+Display:
+- Current issue
+- Suggested improvement
+- Expected impact
+
+Use:
+- Accordions
+- Highlight cards
+- Priority indicators
+
+========================================
+5. USER FLOW ANALYSIS MODULE
+========================================
+
+Analyze:
+- Navigation clarity
+- Conversion flow
+- CTA placement
+- Mobile friendliness
+- Accessibility
+- User friction points
+
+Display:
+- UX score
+- Suggested improvements
+- Recommended structure
+
+Include a simple visual journey:
+Home → Services → Trust → CTA → Conversion
+
+========================================
+6. FINAL AI INSIGHTS DASHBOARD
+========================================
+
+Generate a structured analytics dashboard with:
+- Overall Website Score
+- SEO Score
+- UX Score
+- Content Score
+- Growth Potential Score
+
+Also display:
+- Top 5 Actionable Recommendations
+- Priority Improvements
+- Estimated Growth Impact
+
+Use:
+- Circular progress charts
+- Modern analytics cards
+- Insight widgets
+- Clean dashboard sections
+
+========================================
+EXTRA FEATURES
+========================================
+
+Add:
+- Export insights as PDF
+- Copy insights button
+- Analysis history section
+- Sample demo analysis page
+- Professional loading animations
+
+During processing show AI steps:
+- “Extracting website content…”
+- “Analyzing competitors…”
+- “Generating keyword insights…”
+- “Building growth recommendations…”
+
+========================================
+PROJECT STRUCTURE
+========================================
+
+Organize project cleanly:
+
+frontend/
+  components/
+  pages/
+  hooks/
+  services/
+  utils/
+  styles/
+
+backend/
+  routes/
+  controllers/
+  services/
+  utils/
+
+Include:
+- Reusable components
+- Clean code comments
+- Maintainable architecture
+
+========================================
+DEPLOYMENT REQUIREMENTS
+========================================
+
+Make the application deployment-ready for:
+- Vercel
+- Netlify
+
+Requirements:
+- npm run build support
+- Environment variable handling
+- API configuration support
+- Error handling
+- SEO metadata
+- Favicon support
+- Optimized performance
+
+Include:
+- vercel.json or netlify.toml if needed
+- README.md
+- Deployment guide
+- Environment setup guide
+- Build/start instructions
+
+========================================
+FINAL GOAL
+========================================
+
+The final application should:
+- Feel like a polished AI SaaS startup
+- Be portfolio-worthy
+- Be hackathon-ready
+- Be usable by real users online
+- Have premium UI/UX
+- Deliver structured AI website strategy insights
+- Be visually impressive to recruiters, judges, and users

@@ -3,13 +3,15 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: AI Website Strategy & Growth Analyzer API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: analyses
+    description: Website analysis operations
 paths:
   /healthz:
     get:
@@ -24,6 +26,254 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /analyses:
+    get:
+      operationId: listAnalyses
+      tags: [analyses]
+      summary: List all past analyses
+      responses:
+        "200":
+          description: List of analyses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AnalysisSummary"
+    post:
+      operationId: createAnalysis
+      tags: [analyses]
+      summary: Submit a website URL for analysis
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalysisInput"
+      responses:
+        "201":
+          description: Analysis created and queued
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Analysis"
+        "400":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /analyses/{id}:
+    get:
+      operationId: getAnalysis
+      tags: [analyses]
+      summary: Get full analysis results
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Full analysis result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Analysis"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+    delete:
+      operationId: deleteAnalysis
+      tags: [analyses]
+      summary: Delete an analysis
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /analyses/{id}/scores:
+    get:
+      operationId: getAnalysisScores
+      tags: [analyses]
+      summary: Get scores dashboard for an analysis
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Score breakdown
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ScoreDashboard"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /analyses/{id}/keywords:
+    get:
+      operationId: getAnalysisKeywords
+      tags: [analyses]
+      summary: Get keyword analysis for a website
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Keyword insights
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KeywordAnalysis"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /analyses/{id}/competitors:
+    get:
+      operationId: getAnalysisCompetitors
+      tags: [analyses]
+      summary: Get competitor analysis
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Competitor insights
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompetitorAnalysis"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /analyses/{id}/content:
+    get:
+      operationId: getAnalysisContent
+      tags: [analyses]
+      summary: Get content improvement suggestions
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Content improvement suggestions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContentAnalysis"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /analyses/{id}/userflow:
+    get:
+      operationId: getAnalysisUserFlow
+      tags: [analyses]
+      summary: Get user flow analysis
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: User flow insights
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserFlowAnalysis"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /analyses/{id}/recommendations:
+    get:
+      operationId: getAnalysisRecommendations
+      tags: [analyses]
+      summary: Get top actionable recommendations
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Actionable recommendations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Recommendation"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /demo:
+    get:
+      operationId: getDemoAnalysis
+      tags: [analyses]
+      summary: Get a pre-built demo analysis result
+      responses:
+        "200":
+          description: Demo analysis
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Analysis"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +284,249 @@ components:
       required:
         - status
 
+    ApiError:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+
+    AnalysisInput:
+      type: object
+      required: [url]
+      properties:
+        url:
+          type: string
+          description: The website URL to analyze
+        competitorUrl:
+          type: ["string", "null"]
+          description: Optional competitor URL
+
+    AnalysisSummary:
+      type: object
+      required: [id, url, status, createdAt, overallScore]
+      properties:
+        id:
+          type: integer
+        url:
+          type: string
+        status:
+          type: string
+          enum: [pending, processing, completed, failed]
+        overallScore:
+          type: integer
+          description: Overall website score 0-100
+        createdAt:
+          type: string
+
+    Analysis:
+      type: object
+      required: [id, url, status, createdAt]
+      properties:
+        id:
+          type: integer
+        url:
+          type: string
+        competitorUrl:
+          type: ["string", "null"]
+        status:
+          type: string
+          enum: [pending, processing, completed, failed]
+        title:
+          type: ["string", "null"]
+        metaDescription:
+          type: ["string", "null"]
+        overallScore:
+          type: ["integer", "null"]
+        seoScore:
+          type: ["integer", "null"]
+        uxScore:
+          type: ["integer", "null"]
+        contentScore:
+          type: ["integer", "null"]
+        growthScore:
+          type: ["integer", "null"]
+        createdAt:
+          type: string
+        completedAt:
+          type: ["string", "null"]
+
+    ScoreDashboard:
+      type: object
+      required: [overallScore, seoScore, uxScore, contentScore, growthScore, estimatedGrowthImpact]
+      properties:
+        overallScore:
+          type: integer
+        seoScore:
+          type: integer
+        uxScore:
+          type: integer
+        contentScore:
+          type: integer
+        growthScore:
+          type: integer
+        estimatedGrowthImpact:
+          type: string
+          description: e.g. "+25% organic traffic in 90 days"
+
+    Keyword:
+      type: object
+      required: [keyword, score, intent, type]
+      properties:
+        keyword:
+          type: string
+        score:
+          type: integer
+          description: Relevance/opportunity score 0-100
+        intent:
+          type: string
+          enum: [informational, navigational, commercial, transactional]
+        type:
+          type: string
+          enum: [primary, long-tail, opportunity]
+        volume:
+          type: ["string", "null"]
+
+    KeywordAnalysis:
+      type: object
+      required: [seoScore, keywords, opportunities]
+      properties:
+        seoScore:
+          type: integer
+        keywords:
+          type: array
+          items:
+            $ref: "#/components/schemas/Keyword"
+        opportunities:
+          type: array
+          items:
+            type: string
+
+    Competitor:
+      type: object
+      required: [name, url, strengths, weaknesses, ctaScore, contentScore, uxScore]
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+        strengths:
+          type: array
+          items:
+            type: string
+        weaknesses:
+          type: array
+          items:
+            type: string
+        ctaScore:
+          type: integer
+        contentScore:
+          type: integer
+        uxScore:
+          type: integer
+
+    CompetitorAnalysis:
+      type: object
+      required: [competitors, yourAdvantages, yourWeaknesses]
+      properties:
+        competitors:
+          type: array
+          items:
+            $ref: "#/components/schemas/Competitor"
+        yourAdvantages:
+          type: array
+          items:
+            type: string
+        yourWeaknesses:
+          type: array
+          items:
+            type: string
+
+    ContentSuggestion:
+      type: object
+      required: [area, currentIssue, suggestedImprovement, expectedImpact, priority]
+      properties:
+        area:
+          type: string
+          description: e.g. "Headline", "CTA", "Readability"
+        currentIssue:
+          type: string
+        suggestedImprovement:
+          type: string
+        expectedImpact:
+          type: string
+        priority:
+          type: string
+          enum: [high, medium, low]
+
+    ContentAnalysis:
+      type: object
+      required: [contentScore, readabilityScore, suggestions]
+      properties:
+        contentScore:
+          type: integer
+        readabilityScore:
+          type: integer
+        suggestions:
+          type: array
+          items:
+            $ref: "#/components/schemas/ContentSuggestion"
+
+    FlowStep:
+      type: object
+      required: [step, label, score, issues]
+      properties:
+        step:
+          type: integer
+        label:
+          type: string
+        score:
+          type: integer
+        issues:
+          type: array
+          items:
+            type: string
+
+    UserFlowAnalysis:
+      type: object
+      required: [uxScore, mobileScore, accessibilityScore, flowSteps, frictionPoints, improvements]
+      properties:
+        uxScore:
+          type: integer
+        mobileScore:
+          type: integer
+        accessibilityScore:
+          type: integer
+        flowSteps:
+          type: array
+          items:
+            $ref: "#/components/schemas/FlowStep"
+        frictionPoints:
+          type: array
+          items:
+            type: string
+        improvements:
+          type: array
+          items:
+            type: string
+
+    Recommendation:
+      type: object
+      required: [rank, title, description, category, impact, effort]
+      properties:
+        rank:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+          enum: [seo, content, ux, growth, technical]
+        impact:
+          type: string
+          enum: [high, medium, low]
+        effort:
+          type: string
+          enum: [easy, medium, hard]
