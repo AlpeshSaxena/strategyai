@@ -15,6 +15,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { ScoreRing } from "@/components/score-ring";
+import { DownloadReport } from "@/components/download-report";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -268,11 +269,22 @@ export default function Analysis() {
                 <h1 className="text-xl font-bold tracking-tight">{analysis.title}</h1>
               )}
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <Badge variant="secondary" className="text-xs">
                 <CheckCircle2 className="w-3 h-3 mr-1 text-green-400" />
                 Analysis Complete
               </Badge>
+              {isCompleted && (
+                <DownloadReport
+                  analysis={analysis}
+                  scores={scores}
+                  keywords={keywords}
+                  competitors={competitors}
+                  content={content}
+                  userFlow={userFlow}
+                  recommendations={recommendations}
+                />
+              )}
             </div>
           </div>
         </motion.div>

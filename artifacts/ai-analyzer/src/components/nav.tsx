@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 export function Nav() {
   const [location] = useLocation();
   const { theme, setTheme } = useTheme();
+  const isDark = theme === "dark";
 
   return (
     <motion.nav
@@ -44,18 +45,34 @@ export function Nav() {
               History
             </Button>
           </Link>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-8 w-8 ml-1"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          >
-            {theme === "dark" ? (
+
+          {/* Theme toggle pill */}
+          <div className="ml-2 flex items-center gap-0.5 rounded-full border border-border bg-muted/50 p-0.5">
+            <button
+              onClick={() => setTheme("light")}
+              title="Light mode"
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium transition-all duration-200 ${
+                !isDark
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
               <Sun className="w-3.5 h-3.5" />
-            ) : (
+              <span className="hidden sm:inline">Light</span>
+            </button>
+            <button
+              onClick={() => setTheme("dark")}
+              title="Dark mode"
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium transition-all duration-200 ${
+                isDark
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
               <Moon className="w-3.5 h-3.5" />
-            )}
-          </Button>
+              <span className="hidden sm:inline">Dark</span>
+            </button>
+          </div>
         </div>
       </div>
     </motion.nav>

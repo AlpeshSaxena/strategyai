@@ -3,6 +3,7 @@ import { useGetDemoAnalysis } from "@workspace/api-client-react";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { ScoreRing } from "@/components/score-ring";
+import { DownloadReport } from "@/components/download-report";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "wouter";
@@ -116,12 +117,33 @@ export default function Demo() {
                 {demo?.metaDescription}
               </p>
             </div>
-            <Link href="/">
-              <Button className="gap-2 shrink-0" size="sm">
-                Analyze your site
-                <ArrowRight className="w-4 h-4" />
-              </Button>
-            </Link>
+            <div className="flex items-center gap-2 shrink-0 flex-wrap">
+              {scores && (
+                <DownloadReport
+                  analysis={{
+                    url: "https://example-saas.com",
+                    title: demo?.title ?? "Example SaaS",
+                    overallScore: scores?.overallScore,
+                    seoScore: scores?.seoScore,
+                    uxScore: scores?.uxScore,
+                    contentScore: scores?.contentScore,
+                    growthScore: scores?.growthScore,
+                  }}
+                  scores={scores}
+                  keywords={keywords}
+                  competitors={competitors}
+                  content={content}
+                  userFlow={userFlow}
+                  recommendations={recommendations}
+                />
+              )}
+              <Link href="/">
+                <Button className="gap-2" size="sm">
+                  Analyze your site
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              </Link>
+            </div>
           </div>
         </motion.div>
 
