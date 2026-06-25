@@ -54,17 +54,23 @@ const stats = [
 
 export default function Home() {
   const [url, setUrl] = useState("");
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [, navigate] = useLocation();
   const createAnalysis = useCreateAnalysis();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMsg(null);
     if (!url.trim()) return;
     try {
       const result = await createAnalysis.mutateAsync({ data: { url: url.trim() } });
       navigate(`/analysis/${result.id}`);
-    } catch {
-      // handle silently
+    } catch (err: unknown) {
+      const message =
+        err instanceof Error ? err.message : "Failed to connect to the analysis server.";
+      setErrorMsg(message.includes("fetch") || message.includes("network") || message.includes("Failed")
+        ? "Unable to reach the analysis API. Please check your connection or try the Demo."
+        : message);
     }
   };
 
@@ -175,6 +181,16 @@ export default function Home() {
               )}
             </Button>
           </motion.form>
+
+          {errorMsg && (
+            <motion.div
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="max-w-xl mx-auto mb-4 px-4 py-2.5 rounded-lg bg-destructive/10 border border-destructive/30 text-sm text-destructive text-center"
+            >
+              {errorMsg}
+            </motion.div>
+          )}
 
           <motion.div
             className="flex items-center justify-center gap-2 text-xs text-muted-foreground mb-16"

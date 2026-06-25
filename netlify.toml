@@ -1,0 +1,15 @@
+[build]
+  command   = "pnpm install && pnpm --filter @workspace/ai-analyzer run build"
+  publish   = "artifacts/ai-analyzer/dist/public"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+[[redirects]]
+  from   = "/api/*"
+  to     = "/.netlify/functions/handler"
+  status = 200
+
+[functions]
+  directory     = "netlify/functions"
+  node_bundler  = "esbuild"

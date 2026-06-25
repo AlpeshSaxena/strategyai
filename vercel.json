@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "buildCommand": "pnpm install && pnpm --filter @workspace/ai-analyzer run build",
+  "outputDirectory": "artifacts/ai-analyzer/dist/public",
+  "functions": {
+    "api/handler.ts": {
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/handler" }
+  ]
+}
