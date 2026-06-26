@@ -40,11 +40,11 @@ interface AnalysisRecord {
 const store = new Map<number, AnalysisRecord>();
 let nextId = 1;
 
-function generateScore(base: number, variance: number): number {
+export function generateScore(base: number, variance: number): number {
   return Math.min(100, Math.max(10, Math.round(base + (Math.random() - 0.5) * variance * 2)));
 }
 
-async function scrapeWebsite(url: string) {
+export async function scrapeWebsite(url: string) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 10000);
   try {
@@ -73,7 +73,7 @@ async function scrapeWebsite(url: string) {
   }
 }
 
-function buildAnalysisData(scraped: { title: string; metaDescription: string; headings: string[]; bodyText: string; navLinks: string[]; ctaButtons: string[] }, url: string) {
+export function buildAnalysisData(scraped: { title: string; metaDescription: string; headings: string[]; bodyText: string; navLinks: string[]; ctaButtons: string[] }, url: string) {
   const domain = (() => { try { return new URL(url).hostname.replace("www.", ""); } catch { return url; } })();
   const name = domain.split(".")[0];
   const seoScore = generateScore(62, 20);
@@ -212,7 +212,7 @@ function buildAnalysisData(scraped: { title: string; metaDescription: string; he
   };
 }
 
-function getDemoData() {
+export function getDemoData() {
   return {
     id: 0, url: "https://example-saas.com", competitorUrl: null, status: "completed",
     title: "Example SaaS - Grow Your Business Faster",
