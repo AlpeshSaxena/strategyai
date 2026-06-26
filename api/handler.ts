@@ -4,8 +4,16 @@ import * as cheerio from "cheerio";
 
 const app = express();
 app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Accept any Content-Type as JSON (Netlify/serverless proxies can strip/change headers)
+app.use(express.json({ type: "*/*" }));
+// Fallback: if body was read as raw text, parse it as JSON
+app.use(express.text({ type: "*/*" }));
+app.use((req: any, _res: any, next: any) => {
+  if (typeof req.body === "string") {
+    try { req.body = JSON.parse(req.body); } catch { /* leave as-is */ }
+  }
+  next();
+});
 
 interface AnalysisRecord {
   id: number;
