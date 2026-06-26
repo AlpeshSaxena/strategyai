@@ -1,6 +1,6 @@
 import { useParams, useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import {
   useGetAnalysis,
   useGetAnalysisScores,
@@ -15,7 +15,9 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { ScoreRing } from "@/components/score-ring";
-import { DownloadReport } from "@/components/download-report";
+const DownloadReport = lazy(() =>
+  import("@/components/download-report").then((m) => ({ default: m.DownloadReport }))
+);
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -275,15 +277,17 @@ export default function Analysis() {
                 Analysis Complete
               </Badge>
               {isCompleted && (
-                <DownloadReport
-                  analysis={analysis}
-                  scores={scores}
-                  keywords={keywords}
-                  competitors={competitors}
-                  content={content}
-                  userFlow={userFlow}
-                  recommendations={recommendations}
-                />
+                <Suspense fallback={null}>
+                  <DownloadReport
+                    analysis={analysis}
+                    scores={scores}
+                    keywords={keywords}
+                    competitors={competitors}
+                    content={content}
+                    userFlow={userFlow}
+                    recommendations={recommendations}
+                  />
+                </Suspense>
               )}
             </div>
           </div>

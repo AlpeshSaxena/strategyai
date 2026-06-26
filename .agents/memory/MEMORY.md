@@ -1,0 +1,1 @@
+- [Deployment setup](deployment-setup.md) — Vercel (api/handler.ts) + Netlify (serverless-http) deployment configs; lazy-load PDF lib to cut main bundle by 59%.

@@ -3,7 +3,6 @@ import { useGetDemoAnalysis } from "@workspace/api-client-react";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { ScoreRing } from "@/components/score-ring";
-import { DownloadReport } from "@/components/download-report";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "wouter";
@@ -12,8 +11,12 @@ import {
   ExternalLink, CheckCircle2, AlertTriangle, ChevronDown, ChevronUp, Globe,
   ArrowRight, Zap
 } from "lucide-react";
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { AnimatePresence } from "framer-motion";
+
+const DownloadReport = lazy(() =>
+  import("@/components/download-report").then((m) => ({ default: m.DownloadReport }))
+);
 
 function SectionCard({ title, icon: Icon, children, delay = 0 }: {
   title: string; icon: React.ElementType; children: React.ReactNode; delay?: number;
@@ -119,23 +122,25 @@ export default function Demo() {
             </div>
             <div className="flex items-center gap-2 shrink-0 flex-wrap">
               {scores && (
-                <DownloadReport
-                  analysis={{
-                    url: "https://example-saas.com",
-                    title: demo?.title ?? "Example SaaS",
-                    overallScore: scores?.overallScore,
-                    seoScore: scores?.seoScore,
-                    uxScore: scores?.uxScore,
-                    contentScore: scores?.contentScore,
-                    growthScore: scores?.growthScore,
-                  }}
-                  scores={scores}
-                  keywords={keywords}
-                  competitors={competitors}
-                  content={content}
-                  userFlow={userFlow}
-                  recommendations={recommendations}
-                />
+                <Suspense fallback={null}>
+                  <DownloadReport
+                    analysis={{
+                      url: "https://example-saas.com",
+                      title: demo?.title ?? "Example SaaS",
+                      overallScore: scores?.overallScore,
+                      seoScore: scores?.seoScore,
+                      uxScore: scores?.uxScore,
+                      contentScore: scores?.contentScore,
+                      growthScore: scores?.growthScore,
+                    }}
+                    scores={scores}
+                    keywords={keywords}
+                    competitors={competitors}
+                    content={content}
+                    userFlow={userFlow}
+                    recommendations={recommendations}
+                  />
+                </Suspense>
               )}
               <Link href="/">
                 <Button className="gap-2" size="sm">
